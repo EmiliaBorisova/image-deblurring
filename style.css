@@ -1,0 +1,168 @@
+body {
+    font-family: 'Assistant', sans-serif;
+  }
+  
+  h1 {
+    font-family: 'Bebas Neue', cursive;
+    text-transform: uppercase;
+    font-size: 120px;
+    margin-bottom: 0px;
+    text-shadow: #000000 20px 15px 20px;
+  }
+  
+  h2 {
+    font-size: 35px;
+    font-family: 'PT Serif', serif;
+    margin-bottom: 0;
+  }
+  
+  header {
+    height: 100vh;
+    justify-content: center;
+    background-image: url("imgs/standholder.avif");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    flex-direction: column;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+  }
+  
+  footer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  p {
+    text-indent: 30px ;
+  }
+  
+  ul {
+    font-size: 20px;
+    list-style-position: outside;
+    list-style-type: square;
+  }
+  
+  li {
+    margin-bottom: 5px;
+  }
+  
+  p, ul {
+    color: #393a3ac9;
+  }
+  
+  header > blockquote {
+    margin-top: 0px;
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: #000000 20px 15px 20px;
+    font-family: 'PT Serif', serif;
+  }
+  
+  footer > p {
+    padding: 20px;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  #sources {
+    height: 90vh;
+    justify-content: center;
+   /* background-image: url("imgs/education.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    width: 100%;
+    box-shadow: inset 50px 50px 600px #000000; */
+    overflow-y: scroll;
+    background-color: black;
+    opacity: 50%;
+  
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  #sources::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+  }
+  
+  #sourceList {
+    list-style: none;
+    text-indent: -28px;
+    padding-left: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #sourceList > li {
+    width: 40%;
+    margin-top: 1%;
+    font-size: 20px;
+    color: #ffffff;
+  }
+  
+  #sources > h2 {
+    color: white;
+    padding-top: 2%;
+  }
+  
+  #sources > h2 {
+    text-align: center;
+  }
+  
+  .underline {
+    border-bottom: 1px solid blue;
+    width: 20%;
+  }
+  
+  #click:hover {
+    text-decoration: underline;
+    text-decoration-color: red;
+    cursor: pointer;
+  }
+  
+  footer > p, #aroundAgenda, #click {
+    text-align: center;
+  }
+  
+  .box {
+    width: 45%;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 1%;
+    border-color: black;
+    border-bottom-width: 0.5px;
+    border-bottom-style: solid;
+    margin-top: 30px;
+  }
+   
+  #no-border-box {
+    border-bottom: none;
+  }
+  
+  .box p {
+    font-size: 20px;
+  }
+  
+  .box img {
+    height: 70%;
+    width: 70%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 120px;
+  }
+  
+  #exception {
+    text-indent: 0px;
+  }
+  
+  #aroundAgenda {
+    font-size: 20px;
+  }
