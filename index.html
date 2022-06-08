@@ -15,7 +15,7 @@
     <header>
       <h1>Image Deblurring</h1>
       <blockquote>
-        Created by Emilia Borisova, Fatimah Shabbir hiiiiiiii, Jack Seery, Thevina Dokka, Ege Caglar 
+        Created by Emilia Borisova, Fatimah Shabbir, Jack Seery, Thevina Dokka, Ege Caglar 
       </blockquote>
     </header>
     <main>
@@ -70,7 +70,16 @@
             SRCNN:
         </p>
         <p>
-            Unets:
+            UNets:
+            One of the models we implemented for deblurring our Gaussian blurred dataset in UNet. Unet consists of convolutional neural networks
+            with 23 layers that focus on reconstructing an image based on a vector that is converted from an image's feature map. UNet also
+            makes use of the feature map that is used to create the image vector to convert it back to an image.
+
+            The Architecture of UNet consists of a contracting and expansive path. The first section consists of 3x3 convolution layers that are unpadded, ReLU
+            activation functions and 2x2 max pooling layers. It has a downsampling stride of 2 where we double the feature channels each time. The expansive
+            path upsamples the feature map upsampling with a 2x2 convolution for each step, that inversely, halves the number of feature channels,
+            is added to the respective feature map, and 3x3 convolutions, each followed by a ReLU.
+            Finally, the last layer is a 1x1 convolution used for mapping the feature vector.
         </p>
       </section>
       <section class="box">
