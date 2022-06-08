@@ -136,6 +136,15 @@
       <section class="box">
         <h2> Results </h2>
         <div class="underline"></div>
+        <h3>
+            Analysis of Phase 1:
+        </h3>
+        <p>
+            We noticed that the best few models (as measured by LPIPS and PSNR values) were all trained on images that had been gaussian-blurred. The models we had trained on defocused and motion-blurred images did not perform as well, which we think is because they had a more natural and thus more intense blur. Motion-blurred images are taken while the camera is in action which means that in order to deblur the image, the model would have to learn the direction of motion in which the camera was moving and reconstruct the image on that basis, which it seems like our deep-learning model was not able to achieve well. Defocused images also have a heavier blur than Gaussian and are slightly shifted and zoomed in, which would mean that our model would have to readjust the image and deblur several layers to successfully bring back some clarity and sharpness. 
+        </p>
+        <p>
+            The Gaussian-blurred images were artificially blurred after the image was taken, which is why we believe they were easier for our model to deblur them and restore their original resolution. The 7 best LPIPS and PSNR values from Phase 1 were all from Gaussian models so to further understand the role of hyperparameters and different levels of blur, we chose to train our next phase of models solely on Gaussian-blurred images.
+        </p>
         <p>
             documents:
         </p>
