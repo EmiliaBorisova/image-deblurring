@@ -44,33 +44,77 @@
         <h2> Process </h2>
         <div class="underline"></div>
         <p>
-            Training: 
-            We used a Google colab workspace for a lot of our model development and basic code testing, and we used a local Jupyter Lab notebook for our more intensive training. 
-            The local server was set up by a team member with access to powerful hardware necessary for training. 
-            The server was set up for remote access by all team members and featured the same collaborative workspace as the Google colab workspace. 
-            The local server used more powerful hardware than that available to us on the Google colab workspace, did not time out after any period of inactivity, and never artificially limited our code runtime, making it the ideal choice for our training.
-        </p>
-        <p>
-            Phase 1: Training on defocused blur, motion blur, and gaussian blurred images.        
-        </p>
-        <p>
-            In the first phase, we weren’t sure which of blurred images our model would perform best on, so we experimented with training on all three types and comparing results.         
-        </p>
-        <p>
-            Phase 2: Training on gaussian5, gaussian 10, and gaussian25        
-        </p>
-        <p>
-            After concluding that gaussian-blurred images give the best results for our model, we then tried to experiment further with gaussian and train our models on different levels of gaussian and comparing results within those three.        
-        </p>
+          Training: 
+          We used a Google colab workspace for a lot of our model development and basic code testing, and we used a local Jupyter Lab notebook for our more intensive training. 
+          The local server was set up by a team member with access to powerful hardware necessary for training. 
+          The server was set up for remote access by all team members and featured the same collaborative workspace as the Google colab workspace. 
+          The local server used more powerful hardware than that available to us on the Google colab workspace, did not time out after any period of inactivity, and never artificially limited our code runtime, making it the ideal choice for our training.
+      </p>
+      <h3>
+          Phase 1: Training on defocused blur, motion blur, and gaussian blurred images.        
+      </h3>
+      
+      <p>
+        We implemented both Peak Signal-to-Noise Ratio (PSNR) and Learned Perceptual Image Patch Similarity (LPIPS) metrics for image result comparison. We compared the original, clear image against the resulting image from the last epoch for similarity. PSNR is a ratio between the maximum possible value of a signal and the power of distorting noise that affects the quality of representation and LPIPS is used to judge the perceptual similarity between two images. It was later realized, however, that the produced images are not “pixel-to-pixel” images, so it was not a good idea to compare blurred and sharp images with PSNR. 
+      </p>
+      <p>
+        After viewing our PSNR and LPIPS results, we picked out the top values and highlighted them in red on the Excel sheet linked below. Coincidentally, the best PSNR values (higher is better) and the best LPIPS values (lower is better) were from the same graphs. They also highlight which hyperparameters were best performing. Specifically, it seemed that all of the best values came from the Gaussian data set. This inspired us to dive deeper into Gaussian, so we created 3 more data sets with various blur intensities – sigma values of 5, 10, and 25. This was Phase 2.
+      </p>
+      <h3>
+          Phase 2: Training on gaussian5, gaussian 10, and gaussian25        
+      </h3>
+      <p>
+          After concluding that gaussian-blurred images give the best results for our model, we then tried to experiment further with gaussian and train our models on different levels of gaussian and comparing results within those three.        
+      </p>
       </section>
       <section class="box">
         <h2> Techniques </h2>
         <div class="underline"></div>
-        <p>
+        <h3>
             SRCNN:
+        </h3>
+        <p>
+          SCRNN is a network architecture and stands for Super Resolution Convolutional Neural Network (Albluwi, Krylov, & Dahyot, 2018). This is a deep learning technique with which we did a hyperparameter search to find which parameters worked best on which data sets. These are the parameters we used for each of the 3 blurred datasets (defocused, gaussian, and motion):
+          <ul>
+            <li>
+              Batch Size: 16, 32, 64, 128
+            </li>
+            <li>
+              Learning Rate: 0, 0.01, 0.0001, 0.000001
+            </li>
+            <li>
+              Activation: Relu, tanh
+            </li>
+            <li>
+              Layers: 3, 4, 5
+            </li>
+          </ul>      
         </p>
         <p>
+          For each implementation, we decided to test each hyperparameter by itself, so we kept a constant learning rate, activation, and layer amount when we tested batch size and then kept a constant batch size, activation, and layer amount when we testing learning rate, and so on. This would have yielded 3 (datasets) x (4 (batch sizes) + 4 (learning rates) + 2 (activation functions) + 3 (layers)) = 39 models. However, since there would have been overlap and a repeating model with parameters batch size of 16, learning rate of 0.01, activation of Relu, and 3 layers, we omitted creating some models and the resulting amount was 30 total. 
+        </p>
+        <p>The parameters to be tested in Phase 2 were decided based on the better performing models in Phase 1. Specifically:</p> 
+        <ul>
+          <li>
+            Batch Size: 16, 32, 64, 128
+          </li>
+          <li>
+            Learning Rate: 0.01, 0.0001
+          </li>
+          <li>
+            Activation: Relu, Tanh
+          </li>
+          <li>
+            Layers: 3, 5
+          </li>
+        </ul>
+        <p>
+          Once again, the total amount of models would have been 3 (data sets) x (4 (batch sizes) + 2 (learning rates) + 2 (activations) + 2 (layers)) = 24 models. However, to avoid overlap, and a repeating model with parameters batch size of 16, learning rate of 0.01, activation of Relu, and 3 layers, we omitted creating some models and the resulting amount was 21.
+        </p>
+        <h3>
             UNets:
+        </h3>
+        <p>
             One of the models we implemented for deblurring our Gaussian blurred dataset in UNet. Unet consists of convolutional neural networks
             with 23 layers that focus on reconstructing an image based on a vector that is converted from an image's feature map. UNet also
             makes use of the feature map that is used to create the image vector to convert it back to an image.
@@ -118,6 +162,7 @@
     <section id=sources>
         <h2>References</h2>
           <ul id=sourceList>
+            <li>Albluwi, F., Krylov, V. A., & Dahyot, R. (2018). Image Deblurring and super-resolution using deep convolutional neural networks. 2018 IEEE 28th International Workshop on Machine Learning for Signal Processing (MLSP). https://doi.org/10.1109/mlsp.2018.8516983 </li>
             <li>Ahmetoğlu, A. (2020, April 3). Pytorch implementation of VGG perceptual loss. GithubGist. Retrieved June 7, 2022, from https://gist.github.com/alper111/8233cdb0414b4cb5853f2f730ab95a49</li>
             <li>Aittala, M., & Durand, F. (2018). Burst image Deblurring using permutation invariant convolutional neural networks. Computer Vision – ECCV 2018, 748–764. https://doi.org/10.1007/978-3-030-01237-3_45</li>
             <li>Albluwi, F., Krylov, V. A., & Dahyot, R. (2018). Image Deblurring and super-resolution using deep convolutional neural networks. 2018 IEEE 28th International Workshop on Machine Learning for Signal Processing (MLSP). https://doi.org/10.1109/mlsp.2018.8516983</li>
