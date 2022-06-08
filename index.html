@@ -21,7 +21,6 @@
     <main>
       <section class="box">
         <h2> Problem setup </h2>
-        <div class="underline"></div>
         <p>
             The problem we are trying to solve is deblurring images, or making them sharper and more clear. We started with an image dataset of blurred images and then applied our deep learning models to try to bring the blurred images back to their original clarity.        
         </p>
@@ -35,14 +34,12 @@
       </section>
       <section class="box">
         <h2> Data used </h2>
-        <div class="underline"></div>
         <p>
             The dataset we used was the ‘Blur Dataset’ from Kaggle (Alekseev, 2019). This dataset contains image triplets which have images in 3 different ways: defocused blurred, motion-blurred, and sharp images. As an additional comparison metric, we also generated images blurred using the Gaussian algorithm to have more blurry images that we can run our models on. After training our models, we compared the resulting image with the corresponding sharp image from the dataset to evaluate the effectiveness of our algorithms.         
         </p>
       </section>
       <section class="box">
         <h2> Process </h2>
-        <div class="underline"></div>
         <h3>Training </h3>
         <p>
           We used a Google colab workspace for a lot of our model development and basic code testing, and we used a local Jupyter Lab notebook for our more intensive training. 
@@ -70,7 +67,6 @@
       </section>
       <section class="box">
         <h2> Techniques </h2>
-        <div class="underline"></div>
         <h3>
             SRCNN Setup:
         </h3>
@@ -133,38 +129,46 @@
           </p>
         </p>
       </section>
-      <section class="box">
+      <section class="box-results">
         <h2> Results </h2>
-        <div class="underline"></div>
-        <p>
-            documents:
-        </p>
       </section>
-      <div style="width:90%; height:90vh; margin-left:auto; margin-right:auto; margin-bottom:1%; border-bottom:2px solid black">
+      <div class="docs-first">
         <h3>
           Resulting Images for 3 Best and 3 Worst Models Across Phase 1 and Phase 2: <a href="https://docs.google.com/document/d/1Q8Re5uuez-BOK2VtmhQAcP-2S-zaX9xOa6TB4QTm1ec/edit?usp=sharing">access here</a>
         </h3>
         <iframe style="width:100%; height:90%; overflow: auto; display:block" src="https://docs.google.com/document/d/e/2PACX-1vSEyKbN-qeS8_PjY-3KX5PBX7kp3M9qnl0P9K2fQWrykexR8s0XPY4ZgXc9Vq4xwGE2H-1qoKqgQKGe/pub?embedded=true"></iframe>
       </div>
-      <div style="width:90%; height:90vh; margin-left:auto; margin-right:auto; margin-bottom:1%; border-bottom:2px solid black">
+      <div class="docs">
         <h3>
           MSE Loss Graphs for Phase 1: Defocused, Motion, and Gaussian-Blurred Images: <a href="https://docs.google.com/document/d/1TfUvT3sBsVVNFZ76u_Ythx79yoLde5qK_cVFdPbawEw/edit?usp=sharing">access here</a>
         </h3>
         <iframe style="width:100%; height:90%; overflow: auto; display:block" src="https://docs.google.com/document/d/e/2PACX-1vSq9vcMNRGYMGhV2rpFPrE_sEbSg1PMA5YqOEY50RmjDEafqP-mptQrjmyrb3KF2Vb2GlFtXRCCZ6Ne/pub?embedded=true"></iframe>
       </div>
-      <div style="width:90%; height:90vh; margin-left:auto; margin-right:auto; margin-bottom:1%; border-bottom:2px solid black">
+      <div class="docs">
         <h3>
           MSE Loss Graphs for Phase 2: Gaussian 5, Gaussian 10, and Gaussian 25-Blurred Images: <a href="https://docs.google.com/document/d/1xLqRIAZjYsurFgiXRZOHjTbToSwx0urCPnw-JlQavzg/edit?usp=sharing">access here</a>
         </h3>
         <iframe style="width:100%; height: 90%; overflow: auto; display:block" src="https://docs.google.com/document/d/e/2PACX-1vQayxrZiyQTIxHtActlDVSl7SB8TFG8qoNGidiJpV_lRlKEZ5t0KCM7Rqhm0BmYNi9OBRZhGd4qUNcP/pub?embedded=true"></iframe>
       </div>
-      <div style="width:90%; height:90vh; margin-left:auto; margin-right:auto; margin-bottom:1%; border-bottom:2px solid black">
+      <div class="docs">
         <h3>
           PSNR and LPIPS Results for Phase 1 and Phase 2: <a href="https://docs.google.com/spreadsheets/d/1xWvjZf55JzujkNQahe0aPDgCq2lUQF_oaifnsfYNvYM/edit?usp=sharing">access here</a>
         </h3>
         <iframe style="width:100%; height: 90%; overflow: auto; display:block" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTULSItvebkxcqNwLS8ZNZzifpz-RXIQsPab6Z5RjdBkRhzfk3JF2r0yV2c3E2uxMM_AQbSHSLqX4I9/pubhtml?widget=true&amp;headers=false"></iframe>
       </div>
-    
+    </section>
+    <section class="box">
+      <h2>Analyses </h2>
+      <h3>
+        Analysis of Phase 1:
+    </h3>
+    <p>
+        We noticed that the best few models (as measured by LPIPS and PSNR values) were all trained on images that had been gaussian-blurred. The models we had trained on defocused and motion-blurred images did not perform as well, which we think is because they had a more natural and thus more intense blur. Motion-blurred images are taken while the camera is in action which means that in order to deblur the image, the model would have to learn the direction of motion in which the camera was moving and reconstruct the image on that basis, which it seems like our deep-learning model was not able to achieve well. Defocused images also have a heavier blur than Gaussian and are slightly shifted and zoomed in, which would mean that our model would have to readjust the image and deblur several layers to successfully bring back some clarity and sharpness. 
+    </p>
+    <p>
+        The Gaussian-blurred images were artificially blurred after the image was taken, which is why we believe they were easier for our model to deblur them and restore their original resolution. The 7 best LPIPS and PSNR values from Phase 1 were all from Gaussian models so to further understand the role of hyperparameters and different levels of blur, we chose to train our next phase of models solely on Gaussian-blurred images.
+    </p>
+    </section>
     </main>
     <section id=sources>
         <h2>References</h2>
