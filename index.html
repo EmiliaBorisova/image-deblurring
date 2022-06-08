@@ -53,25 +53,21 @@
       <h3>
           Phase 1: Training on defocused blur, motion blur, and gaussian blurred images.        
       </h3>
-      
-      <p>
-        We implemented both Peak Signal-to-Noise Ratio (PSNR) and Learned Perceptual Image Patch Similarity (LPIPS) metrics for image result comparison. We compared the original, clear image against the resulting image from the last epoch for similarity. PSNR is a ratio between the maximum possible value of a signal and the power of distorting noise that affects the quality of representation and LPIPS is used to judge the perceptual similarity between two images. It was later realized, however, that the produced images are not “pixel-to-pixel” images, so it was not a good idea to compare blurred and sharp images with PSNR. 
-      </p>
       <p>
         After viewing our PSNR and LPIPS results, we picked out the top values and highlighted them in red on the Excel sheet linked below. Coincidentally, the best PSNR values (higher is better) and the best LPIPS values (lower is better) were from the same graphs. They also highlight which hyperparameters were best performing. Specifically, it seemed that all of the best values came from the Gaussian data set. This inspired us to dive deeper into Gaussian, so we created 3 more data sets with various blur intensities – sigma values of 5, 10, and 25. This was Phase 2.
       </p>
       <h3>
-          Phase 2: Training on gaussian5, gaussian 10, and gaussian25        
+          Phase 2: Training on gaussian sigma values of 5, 10, and 25       
       </h3>
       <p>
-          After concluding that gaussian-blurred images give the best results for our model, we then tried to experiment further with gaussian and train our models on different levels of gaussian and comparing results within those three.        
+        Using PSNR and LPIPS again for image result comparison, we found that the best results were spread across all of the various Gaussian blur values, but the very best seemed to be the graph with blur value of 5, 3 layers, Relu activation, 3 layers, and batch size of 16. Both the PSNR and LPIPS values were the best for this model. Additionally, the better values were centered around a gaussian blur of 5 and 10. Blur of 25 did not do very well. This makes sense since a larger blur amount might be harder to deblur than smaller blur values.         
       </p>
       </section>
       <section class="box">
         <h2> Techniques </h2>
         <div class="underline"></div>
         <h3>
-            SRCNN:
+            SRCNN Setup:
         </h3>
         <p>
           SCRNN is a network architecture and stands for Super Resolution Convolutional Neural Network (Albluwi, Krylov, & Dahyot, 2018). This is a deep learning technique with which we did a hyperparameter search to find which parameters worked best on which data sets. These are the parameters we used for each of the 3 blurred datasets (defocused, gaussian, and motion):
@@ -112,7 +108,7 @@
           Once again, the total amount of models would have been 3 (data sets) x (4 (batch sizes) + 2 (learning rates) + 2 (activations) + 2 (layers)) = 24 models. However, to avoid overlap, and a repeating model with parameters batch size of 16, learning rate of 0.01, activation of Relu, and 3 layers, we omitted creating some models and the resulting amount was 21.
         </p>
         <h3>
-            UNets:
+            UNets Setup:
         </h3>
         <p>
             One of the models we implemented for deblurring our Gaussian blurred dataset in UNet. Unet consists of convolutional neural networks
@@ -124,6 +120,12 @@
             path upsamples the feature map upsampling with a 2x2 convolution for each step, that inversely, halves the number of feature channels,
             is added to the respective feature map, and 3x3 convolutions, each followed by a ReLU.
             Finally, the last layer is a 1x1 convolution used for mapping the feature vector.
+        </p>
+        <h3> Evaluation Metric</h3>
+        <p>
+          <p>
+            We implemented both Peak Signal-to-Noise Ratio (PSNR) and Learned Perceptual Image Patch Similarity (LPIPS) metrics for image result comparison. PSNR is a ratio between the maximum possible value of a signal and the power of distorting noise that affects the quality of representation and LPIPS is used to judge the perceptual similarity between two images. We compared the original, clear image against the resulting image from the last epoch for similarity. 
+          </p>
         </p>
       </section>
       <section class="box">
