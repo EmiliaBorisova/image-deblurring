@@ -43,24 +43,29 @@
       <section class="box">
         <h2> Process </h2>
         <div class="underline"></div>
+        <h3>Training </h3>
         <p>
-          Training: 
           We used a Google colab workspace for a lot of our model development and basic code testing, and we used a local Jupyter Lab notebook for our more intensive training. 
+        </p>
+        <p>
           The local server was set up by a team member with access to powerful hardware necessary for training. 
-          The server was set up for remote access by all team members and featured the same collaborative workspace as the Google colab workspace. 
+          The server was set up for remote access by all team members and featured the same collaborative workspace as the Google colab workspace.
+        </p>
+        <p>
           The local server used more powerful hardware than that available to us on the Google colab workspace, did not time out after any period of inactivity, and never artificially limited our code runtime, making it the ideal choice for our training.
-      </p>
+        </p>
       <h3>
-          Phase 1: Training on defocused blur, motion blur, and gaussian blurred images.        
+          Phase 1: Training on defocused blur, motion blur, and gaussian blurred images       
       </h3>
+      <p> First, we set up a SCRNN model and implemented the PSNR and LPIPS evaluation metrics as described in the Techniques section. </p> 
       <p>
-        After viewing our PSNR and LPIPS results, we picked out the top values and highlighted them in red on the Excel sheet linked below. Coincidentally, the best PSNR values (higher is better) and the best LPIPS values (lower is better) were from the same graphs. They also highlight which hyperparameters were best performing. Specifically, it seemed that all of the best values came from the Gaussian data set. This inspired us to dive deeper into Gaussian, so we created 3 more data sets with various blur intensities – sigma values of 5, 10, and 25. This was Phase 2.
+        After viewing our PSNR and LPIPS results, we picked out the top values and highlighted them in red on the Excel sheet linked below. Coincidentally, the best PSNR values (higher is better) and the best LPIPS values (lower is better) were from the same graphs. They also highlight which hyperparameters were best performing. Specifically, it seemed that all of the best values came from the Gaussian data set. This inspired us to dive deeper into Gaussian, so we artificially created 3 more data sets with various blur intensities – sigma values of 5, 10, and 25. This was Phase 2.
       </p>
       <h3>
           Phase 2: Training on gaussian sigma values of 5, 10, and 25       
       </h3>
       <p>
-        Using PSNR and LPIPS again for image result comparison, we found that the best results were spread across all of the various Gaussian blur values, but the very best seemed to be the graph with blur value of 5, 3 layers, Relu activation, 3 layers, and batch size of 16. Both the PSNR and LPIPS values were the best for this model. Additionally, the better values were centered around a gaussian blur of 5 and 10. Blur of 25 did not do very well. This makes sense since a larger blur amount might be harder to deblur than smaller blur values.         
+        Using the same model and both of the evaluation metrics, we found that the best results were spread across all of the various Gaussian blur values, but the very best seemed to be the graph with blur sigma value of 5, Relu activation, 3 layers, 0.01 learning rate, and batch size of 16. Both the PSNR and LPIPS values were the best for this model. Additionally, the better values were centered around a Gaussian blur of 5 and 10. Blur of 25 did not do very well. This makes sense since a larger blur amount might be harder to deblur than smaller blur values.         
       </p>
       </section>
       <section class="box">
@@ -70,7 +75,7 @@
             SRCNN Setup:
         </h3>
         <p>
-          SCRNN is a network architecture and stands for Super Resolution Convolutional Neural Network (Albluwi, Krylov, & Dahyot, 2018). This is a deep learning technique with which we did a hyperparameter search to find which parameters worked best on which data sets. These are the parameters we used for each of the 3 blurred datasets (defocused, gaussian, and motion):
+          SCRNN is a network architecture and stands for Super Resolution Convolutional Neural Network (Albluwi, Krylov, & Dahyot, 2018). This is a deep learning technique with which we did a hyperparameter search to find which parameters worked best on which data sets. The loss function defined was MSE and the optimizer defined was Adam. We also implemented a learning rate scheduler such that if the loss value does not improve after 5 epochs, then the new learning rate will be the old one * 0.5. These are the parameters we used for each of the 3 blurred datasets (defocused, gaussian, and motion):
           <ul>
             <li>
               Batch Size: 16, 32, 64, 128
