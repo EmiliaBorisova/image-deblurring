@@ -161,13 +161,52 @@
       <h2>Analyses </h2>
       <h3>
         Analysis of Phase 1:
-    </h3>
-    <p>
+      </h3>
+      <p>
         We noticed that the best few models (as measured by LPIPS and PSNR values) were all trained on images that had been gaussian-blurred. The models we had trained on defocused and motion-blurred images did not perform as well, which we think is because they had a more natural and thus more intense blur. Motion-blurred images are taken while the camera is in action which means that in order to deblur the image, the model would have to learn the direction of motion in which the camera was moving and reconstruct the image on that basis, which it seems like our deep-learning model was not able to achieve well. Defocused images also have a heavier blur than Gaussian and are slightly shifted and zoomed in, which would mean that our model would have to readjust the image and deblur several layers to successfully bring back some clarity and sharpness. 
-    </p>
-    <p>
+      </p>
+      <p>
         The Gaussian-blurred images were artificially blurred after the image was taken, which is why we believe they were easier for our model to deblur them and restore their original resolution. The 7 best LPIPS and PSNR values from Phase 1 were all from Gaussian models so to further understand the role of hyperparameters and different levels of blur, we chose to train our next phase of models solely on Gaussian-blurred images.
-    </p>
+      </p>
+        <h3>
+        Analysis of Phase 2:
+        </h3>
+        <p>
+            After training our SRCNN model on various levels of Gaussian blurred images (from least to most intense blur: Gaussian 5, Gaussian 10, and Gaussian 25), we found that Gaussian 5 performed best amongst the three. Given that Gaussian 5 images have the least amount of blur, this result was not surprising to us since deblurred images that were initially not very blurry would have the most similarity to the sharp images. While our model was still able to somewhat deblur Gaussian 10 and Gaussian 25 images, the results were not as sharp as they were with Gaussian 5 and the performance worsened as the blur intensified.
+        </p>
+
+        <h3>
+            Analysis of Parameters Used in Phase 2:
+        </h3>
+        <p>
+            The graphs we used for comparing results of different hyperparameters can be found under the “Graphs” sheet of the spreadsheet embedded at the bottom of the website (also linked here).
+        </p>
+        <h4>
+            Learning Rate:
+        </h4>
+        <p>
+            After comparing results from models with a learning rate of 0.01 and 0.001, we found a rate of 0.001 seemed too small and performed worse than models with a learning rate of 0.01. We believe this is because often times a learning rate as small as 0.001 is slower and thus would require more epochs to produce a better result. Since we kept the epochs constant at 40, our model with the smaller learning rate wasn’t able to produce as clear of an image as the model with the 0.01 learning rate.
+        <p>
+        <h4>
+            Batch Size:
+        </h4>
+        <p>
+            This time, we noticed batch size make a huge different in our results, as we saw the models with higher batch sizes perform much worse than models with lower batch size. For reference, the top 3 worst values of LPIPS were all from models that with a batch size of 128 and the resulting images from those models are quite blurry. This fits our prediction that as the batch size increases, the model has to learn on more images which can lower the quality of its resulting deblurred image. Instead of only having to learn patterns and directions for a few images, large batch sizes force the model to have to inspect and learn about many more images which would require more epochs and perhaps a different model entirely to succeed.
+        </p>
+
+        <h4>
+            Activation Function:
+        </h4>
+        <p>
+            We experimented with models using tanh activation functions and the more common ReLu function. The results from this phase were not very consistent or linear but we concluded that for the most part, the tanh models perform better and have lower LPIPS values than the ReLu ones. Because the values were so close, it wasn’t always the case that one was better than the other but as the Gaussian blur level increased, ReLu seemed to have worse LPIPS values than tanh. This may be due to the “dying ReLu problem,” where some of the neurons in the network just stop responding and don’t change values at all due to low gradients, as low as 0.
+        </p>
+
+        <h4>
+            Number of Layers:
+        </h4>
+        <p>
+            This time we experimented with models with 3 layers and 5 layers but again, the results were not exactly consistent. For models with a lower level of Gaussian blur, 3 layers seemed to be perform better and have lower LPIPS values but they seem to converge for Gaussian 25. 
+        </p>
     </section>
     </main>
     <section id=sources>
