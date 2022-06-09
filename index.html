@@ -61,14 +61,14 @@
           The local server used more powerful hardware than that available to us on the Google colab workspace, did not time out after any period of inactivity, and never artificially limited our code runtime, making it the ideal choice for our training.
         </p>
       <h3>
-          Phase 1: Training on defocused blur, motion blur, and gaussian blurred images
+          Phase 1: SRCNN on defocused blur, motion blur, and gaussian blurred images
       </h3>
       <p> First, we set up a SCRNN model and implemented the PSNR and LPIPS evaluation metrics as described in the Techniques section. </p>
       <p>
         After viewing our PSNR and LPIPS results, we picked out the top values and highlighted them in red on the Excel sheet linked below. Coincidentally, the best PSNR values (higher is better) and the best LPIPS values (lower is better) were from the same graphs. They also highlight which hyperparameters were best performing. Specifically, it seemed that all of the best values came from the Gaussian data set. This inspired us to dive deeper into Gaussian, so we artificially created 3 more data sets with various blur intensities – sigma values of 5, 10, and 25. This was Phase 2.
       </p>
       <h3>
-          Phase 2: Training on gaussian sigma values of 5, 10, and 25
+          Phase 2: SRCNN on gaussian sigma values of 5, 10, and 25
       </h3>
       <p>
         Using the same model and both of the evaluation metrics, we found that the best results were spread across all of the various Gaussian blur values, but the very best seemed to be the graph with blur sigma value of 5, Relu activation, 3 layers, 0.01 learning rate, and batch size of 16. Both the PSNR and LPIPS values were the best for this model. Generally, these measures showed that the models performed best on Gaussian blur value of 5, a bit worse for Gaussian blur value of 10, and the worst on blur of 25.
