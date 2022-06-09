@@ -129,7 +129,7 @@
             activation functions and 2x2 max pooling layers. It has a downsampling stride of 2 where we double the feature channels each time. The expansive
             path upsamples the feature map upsampling with a 2x2 convolution for each step, that inversely, halves the number of feature channels,
             is added to the respective feature map, and 3x3 convolutions, each followed by a ReLU.
-            Finally, the last layer is a 1x1 convolution used for mapping the feature vector.
+            Finally, the last layer is a 1x1 convolution used for mapping the feature vector. The optimizer we chose to use for this mode is Adam.
         </p>
         <h3> Evaluation Metric</h3>
         <p>
