@@ -39,7 +39,9 @@
         <p>
             This problem of deblurring images has been less popular among deep learning research, but recently many research papers have been published that propose various methods for addressing the issue (Aittala & Durand, 2018; Albluwi et al., 2018; Rath, 2020). We used many of these papers for inspiration on constructing our own neural networks to solve this issue and produce the most optimal deblurring models that we could.
         </p>
-        <iframe width="100%" height="56%" src="https://www.youtube.com/embed/sLhV7gv4CAM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div id="video">
+           <iframe src="https://www.youtube.com/embed/sLhV7gv4CAM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
       </section>
       <section class="box">
         <h2> Data used </h2>
@@ -77,7 +79,7 @@
         Phase 3: UNets
       </h3>
       <p>
-        The next model we implemented in UNets where we also evaluated its performance using a PSNR and LPIPS metric system. As our SCRNN model performed better for the Gaussian Blur dataset, this model was only trained and evaluated on the Gaussian dataset to have a comparative analysis of the models on a constant model by the end. Based off our PSNR and LPIPS results as posted in the Excel sheet, we found that the model that performed well based on PSNR actually seemed to be the worst with LPIPS. We found this model to be tricker to train as a constant issue we faced was our server disconnecting. 
+        The next model we implemented in UNets where we also evaluated its performance using a PSNR and LPIPS metric system. As our SCRNN model performed better for the Gaussian Blur dataset, this model was only trained and evaluated on the Gaussian dataset to have a comparative analysis of the models on a constant model by the end. Based off our PSNR and LPIPS results as posted in the Excel sheet, we found that the model that performed well based on PSNR actually seemed to be the worst with LPIPS. We found this model to be tricker to train as a constant issue we faced was our server disconnecting.
       </p>
       </section>
       <section class="box">
@@ -228,7 +230,7 @@
             This time we experimented with models with 3 layers and 5 layers but again, the results were not exactly consistent. For models with a lower level of Gaussian blur, 3 layers seemed to be perform better and have lower LPIPS values but they seem to converge for Gaussian 25. In general, finding an optimal number of layers is difficult for a neural network and different depending on the model. Our models were imperfect and may have caused the results from different layers to be unpredictable. 3 may be the optimal number of layers for our models, but perhaps other amounts like 2 would have led to better results but also more training time, which was a tradeoff we had to consider given the lengthy amount of time it took to run our models.
         </p>
         <h3>
-            Analysis of UNet Algorithm in Phase 3: 
+            Analysis of UNet Algorithm in Phase 3:
         </h3>
         <p>
             When training our UNet model, the hyperparameter values we searched over were batch_size, learning rate, as well as epochs. Initially, we began to train our UNet model on a total of 20+ parameter combinations but found that parameters around the learning rate of 1e-5 seemed to perform better in general. As the model did take longer to train that SCRNN (average of 3 hours), we scaled down our parameters to four models that seemed to best encapsulate the capacity of UNet. As our PSNR and LPIPS metric evaluation was contradictory, a visual analysis helped us deduce that Model 0, with hyperparams of 100 epochs, batchsize 10, and learning rate of 1e-5, and Model 1, with hyperparams of 400 epochs, batchsize 5, and learning rate of 1e-4, seemed to perform the best.
