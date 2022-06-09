@@ -34,7 +34,7 @@
             The problem we are trying to solve is deblurring images, or making them sharper and more clear. We started with an image dataset of blurred images and then applied our deep learning models to try to bring the blurred images back to their original clarity.
         </p>
         <p>
-            Image deblurring is crucial to recover images that were taken hurriedly or without enough time to focus the camera, typically caused by shaky hands (or shaky camera) or taken while in motion. Blurry images can decrease the quality of the image and cover crucial details captured in the image. By using deep learning to clear images, it can bring more information to the image such as helping with facial recognition, text clarity, image detection, and many more things. Deblurring images are especially useful to law enforcement to help interpret blurry photo evidence, or even just to the average photographer to improve the quality and clarity of their photos that may have been taken in a rush.
+            Image deblurring is important to recover images that were taken hurriedly or without enough time to focus the camera, typically caused by shaky hands (or shaky camera) or taken while in motion. Blurry images can decrease the quality of the image and cover crucial details captured in the image. By using deep learning to clear images, it can bring more information to the image such as helping with facial recognition, text clarity, image detection, and many more things. Deblurring images are especially useful to law enforcement to help interpret blurry photo evidence, or even just to the average photographer to improve the quality and clarity of their photos that may have been taken in a rush.
         </p>
         <p>
             This problem of deblurring images has been less popular among deep learning research, but recently many research papers have been published that propose various methods for addressing the issue (Aittala & Durand, 2018; Albluwi et al., 2018; Rath, 2020). We used many of these papers for inspiration on constructing our own neural networks to solve this issue and produce the most optimal deblurring models that we could.
@@ -219,7 +219,7 @@
             Number of Layers:
         </h4>
         <p>
-            This time we experimented with models with 3 layers and 5 layers but again, the results were not exactly consistent. For models with a lower level of Gaussian blur, 3 layers seemed to be perform better and have lower LPIPS values but they seem to converge for Gaussian 25.
+            This time we experimented with models with 3 layers and 5 layers but again, the results were not exactly consistent. For models with a lower level of Gaussian blur, 3 layers seemed to be perform better and have lower LPIPS values but they seem to converge for Gaussian 25. In general, finding an optimal number of layers is difficult for a neural network and different depending on the model. Our models were imperfect and may have caused the results from different layers to be unpredictable. 3 may be the optimal number of layers for our models, but perhaps other amounts like 2 would have led to better results but also more training time, which was a tradeoff we had to consider given the lengthy amount of time it took to run our models.
         </p>
     </section>
     </main>
