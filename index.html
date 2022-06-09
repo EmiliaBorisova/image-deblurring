@@ -15,14 +15,23 @@
     <header>
       <h1>Image Deblurring</h1>
       <blockquote>
-        Created by Emilia Borisova, Fatimah Shabbir, Jack Seery, Thevina Dokka, Ege Caglar 
+        Created by Emilia Borisova, Fatimah Shabbir, Jack Seery, Thevina Dokka, Ege Caglar
       </blockquote>
     </header>
     <main>
       <section class="box">
+        <h2>Collaborators</h2>
+        <p>
+          We would like to be evaluated as a 5-person team because there was a member that showed up one time when we planned out the Project Proposal, but never showed up since and we never heard from him again. Please exclude Efe Hatin when grading this project.
+        </p>
+        <p>
+          Additionally, we hope that using an extension on this project will not harm our grade. The reason why we asked for one is because we had a team member promise that they would contribute more if given more time but that did not end up being the case. As a result, we were rushed to conclude some of our experiments on Unets.
+        </p>
+      </section>
+      <section class="box">
         <h2> Problem setup </h2>
         <p>
-            The problem we are trying to solve is deblurring images, or making them sharper and more clear. We started with an image dataset of blurred images and then applied our deep learning models to try to bring the blurred images back to their original clarity.        
+            The problem we are trying to solve is deblurring images, or making them sharper and more clear. We started with an image dataset of blurred images and then applied our deep learning models to try to bring the blurred images back to their original clarity.
         </p>
         <p>
             Image deblurring is crucial to recover images that were taken hurriedly or without enough time to focus the camera, typically caused by shaky hands (or shaky camera) or taken while in motion. Blurry images can decrease the quality of the image and cover crucial details captured in the image. By using deep learning to clear images, it can bring more information to the image such as helping with facial recognition, text clarity, image detection, and many more things. Deblurring images are especially useful to law enforcement to help interpret blurry photo evidence, or even just to the average photographer to improve the quality and clarity of their photos that may have been taken in a rush.
@@ -35,34 +44,34 @@
       <section class="box">
         <h2> Data used </h2>
         <p>
-            The dataset we used was the ‘Blur Dataset’ from Kaggle (Alekseev, 2019). This dataset contains image triplets which have images in 3 different ways: defocused blurred, motion-blurred, and sharp images. As an additional comparison metric, we also generated images blurred using the Gaussian algorithm to have more blurry images that we can run our models on. After training our models, we compared the resulting image with the corresponding sharp image from the dataset to evaluate the effectiveness of our algorithms.         
+            The dataset we used was the ‘Blur Dataset’ from Kaggle (Alekseev, 2019). This dataset contains image triplets which have images in 3 different ways: defocused blurred, motion-blurred, and sharp images. As an additional comparison metric, we also generated images blurred using the Gaussian algorithm to have more blurry images that we can run our models on. After training our models, we compared the resulting image with the corresponding sharp image from the dataset to evaluate the effectiveness of our algorithms.
         </p>
       </section>
       <section class="box">
         <h2> Process </h2>
         <h3>Training </h3>
         <p>
-          We used a Google colab workspace for a lot of our model development and basic code testing, and we used a local Jupyter Lab notebook for our more intensive training. 
+          We used a Google colab workspace for a lot of our model development and basic code testing, and we used a local Jupyter Lab notebook for our more intensive training. The framework used was PyTorch.
         </p>
         <p>
-          The local server was set up by a team member with access to powerful hardware necessary for training. 
+          The local server was set up by a team member with access to powerful hardware necessary for training.
           The server was set up for remote access by all team members and featured the same collaborative workspace as the Google colab workspace.
         </p>
         <p>
           The local server used more powerful hardware than that available to us on the Google colab workspace, did not time out after any period of inactivity, and never artificially limited our code runtime, making it the ideal choice for our training.
         </p>
       <h3>
-          Phase 1: Training on defocused blur, motion blur, and gaussian blurred images       
+          Phase 1: Training on defocused blur, motion blur, and gaussian blurred images
       </h3>
-      <p> First, we set up a SCRNN model and implemented the PSNR and LPIPS evaluation metrics as described in the Techniques section. </p> 
+      <p> First, we set up a SCRNN model and implemented the PSNR and LPIPS evaluation metrics as described in the Techniques section. </p>
       <p>
         After viewing our PSNR and LPIPS results, we picked out the top values and highlighted them in red on the Excel sheet linked below. Coincidentally, the best PSNR values (higher is better) and the best LPIPS values (lower is better) were from the same graphs. They also highlight which hyperparameters were best performing. Specifically, it seemed that all of the best values came from the Gaussian data set. This inspired us to dive deeper into Gaussian, so we artificially created 3 more data sets with various blur intensities – sigma values of 5, 10, and 25. This was Phase 2.
       </p>
       <h3>
-          Phase 2: Training on gaussian sigma values of 5, 10, and 25       
+          Phase 2: Training on gaussian sigma values of 5, 10, and 25
       </h3>
       <p>
-        Using the same model and both of the evaluation metrics, we found that the best results were spread across all of the various Gaussian blur values, but the very best seemed to be the graph with blur sigma value of 5, Relu activation, 3 layers, 0.01 learning rate, and batch size of 16. Both the PSNR and LPIPS values were the best for this model. Additionally, the better values were centered around a Gaussian blur of 5 and 10. Blur of 25 did not do very well. This makes sense since a larger blur amount might be harder to deblur than smaller blur values.         
+        Using the same model and both of the evaluation metrics, we found that the best results were spread across all of the various Gaussian blur values, but the very best seemed to be the graph with blur sigma value of 5, Relu activation, 3 layers, 0.01 learning rate, and batch size of 16. Both the PSNR and LPIPS values were the best for this model. Generally, these measures showed that the models performed best on Gaussian blur value of 5, a bit worse for Gaussian blur value of 10, and the worst on blur of 25.
       </p>
       </section>
       <section class="box">
@@ -85,12 +94,12 @@
             <li>
               Layers: 3, 4, 5
             </li>
-          </ul>      
+          </ul>
         </p>
         <p>
-          For each implementation, we decided to test each hyperparameter by itself, so we kept a constant learning rate, activation, and layer amount when we tested batch size and then kept a constant batch size, activation, and layer amount when we testing learning rate, and so on. This would have yielded 3 (datasets) x (4 (batch sizes) + 4 (learning rates) + 2 (activation functions) + 3 (layers)) = 39 models. However, since there would have been overlap and a repeating model with parameters batch size of 16, learning rate of 0.01, activation of Relu, and 3 layers, we omitted creating some models and the resulting amount was 30 total. 
+          For each implementation, we decided to test each hyperparameter by itself, so we kept a constant learning rate, activation, and layer amount when we tested batch size and then kept a constant batch size, activation, and layer amount when we testing learning rate, and so on. This would have yielded 3 (datasets) x (4 (batch sizes) + 4 (learning rates) + 2 (activation functions) + 3 (layers)) = 39 models. However, since there would have been overlap and a repeating model with parameters batch size of 16, learning rate of 0.01, activation of Relu, and 3 layers, we omitted creating some models and the resulting amount was 30 total.
         </p>
-        <p>The parameters to be tested in Phase 2 were decided based on the better performing models in Phase 1. Specifically:</p> 
+        <p>The parameters to be tested in Phase 2 were decided based on the better performing models in Phase 1. Specifically:</p>
         <ul>
           <li>
             Batch Size: 16, 32, 64, 128
@@ -125,9 +134,14 @@
         <h3> Evaluation Metric</h3>
         <p>
           <p>
-            We implemented both Peak Signal-to-Noise Ratio (PSNR) and Learned Perceptual Image Patch Similarity (LPIPS) metrics for image result comparison. PSNR is a ratio between the maximum possible value of a signal and the power of distorting noise that affects the quality of representation and LPIPS is used to judge the perceptual similarity between two images. We compared the original, clear image against the resulting image from the last epoch for similarity. 
+            We implemented both Peak Signal-to-Noise Ratio (PSNR) and Learned Perceptual Image Patch Similarity (LPIPS) metrics for image result comparison. PSNR is a ratio between the maximum possible value of a signal and the power of distorting noise that affects the quality of representation and LPIPS is used to judge the perceptual similarity between two images. We compared the original, clear image against the resulting image from the last epoch for similarity.
           </p>
         </p>
+      </section>
+      <section class="box">
+        <h2> Code Used </h2>
+        <p> For SCRNN and Unets, we took inspiration from the architectures we explored online and in research papers. For SCRNN, we found a paper by Albluwi, Krylov, and Dahyot to be most helpful (can be found in the References section) and for Unets, we referenced ... </p>
+        <p> For the evaluation metrics -- PSNR and SCRNN -- we used existing online libraries and had to do some minimal operations to get our data to fit as parameters into the library functions. </p>
       </section>
       <section class="box-results">
         <h2> Results </h2>
@@ -163,7 +177,7 @@
         Analysis of Phase 1:
       </h3>
       <p>
-        We noticed that the best few models (as measured by LPIPS and PSNR values) were all trained on images that had been gaussian-blurred. The models we had trained on defocused and motion-blurred images did not perform as well, which we think is because they had a more natural and thus more intense blur. Motion-blurred images are taken while the camera is in action which means that in order to deblur the image, the model would have to learn the direction of motion in which the camera was moving and reconstruct the image on that basis, which it seems like our deep-learning model was not able to achieve well. Defocused images also have a heavier blur than Gaussian and are slightly shifted and zoomed in, which would mean that our model would have to readjust the image and deblur several layers to successfully bring back some clarity and sharpness. 
+        We noticed that the best few models (as measured by LPIPS and PSNR values) were all trained on images that had been gaussian-blurred. The models we had trained on defocused and motion-blurred images did not perform as well, which we think is because they had a more natural and thus more intense blur. Motion-blurred images are taken while the camera is in action which means that in order to deblur the image, the model would have to learn the direction of motion in which the camera was moving and reconstruct the image on that basis, which it seems like our deep-learning model was not able to achieve well. Defocused images also have a heavier blur than Gaussian and are slightly shifted and zoomed in, which would mean that our model would have to readjust the image and deblur several layers to successfully bring back some clarity and sharpness.
       </p>
       <p>
         The Gaussian-blurred images were artificially blurred after the image was taken, which is why we believe they were easier for our model to deblur them and restore their original resolution. The 7 best LPIPS and PSNR values from Phase 1 were all from Gaussian models so to further understand the role of hyperparameters and different levels of blur, we chose to train our next phase of models solely on Gaussian-blurred images.
@@ -205,7 +219,7 @@
             Number of Layers:
         </h4>
         <p>
-            This time we experimented with models with 3 layers and 5 layers but again, the results were not exactly consistent. For models with a lower level of Gaussian blur, 3 layers seemed to be perform better and have lower LPIPS values but they seem to converge for Gaussian 25. 
+            This time we experimented with models with 3 layers and 5 layers but again, the results were not exactly consistent. For models with a lower level of Gaussian blur, 3 layers seemed to be perform better and have lower LPIPS values but they seem to converge for Gaussian 25.
         </p>
     </section>
     </main>
